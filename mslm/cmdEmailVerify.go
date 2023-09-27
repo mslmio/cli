@@ -55,7 +55,7 @@ func cmdEmailVerify() error {
 
 	args := pflag.Args()[1:]
 
-	if len(args) != 1 {
+	if len(args) != 1 || fHelp {
 		printHelpEmailVerify()
 		return nil
 	}
