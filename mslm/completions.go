@@ -8,6 +8,8 @@ import (
 var completions = &complete.Command{
 	Sub: map[string]*complete.Command{
 		"emailVerify": completionsEmailVerify,
+		"completion":  completionsCompletion,
+		"version":     completionsVersion,
 	},
 	Flags: map[string]complete.Predictor{
 		"-v":        predict.Nothing,

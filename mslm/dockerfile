@@ -1,0 +1,6 @@
+# syntax=docker/dockerfile:1
+FROM alpine:latest
+
+WORKDIR /mslm
+COPY build/mslm ./
+ENTRYPOINT ["/mslm/mslm"]
