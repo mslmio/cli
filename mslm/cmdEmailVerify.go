@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/ipinfo/cli/lib/complete"
-	"github.com/ipinfo/cli/lib/complete/predict"
 	"github.com/mslmio/cli/lib"
+	"github.com/mslmio/cli/lib/complete"
+	"github.com/mslmio/cli/lib/complete/predict"
 	"github.com/mslmio/sdk-go/mslm"
 	"github.com/spf13/pflag"
 )

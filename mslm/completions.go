@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/ipinfo/cli/lib/complete"
-	"github.com/ipinfo/cli/lib/complete/predict"
+	"github.com/mslmio/cli/lib/complete"
+	"github.com/mslmio/cli/lib/complete/predict"
 )
 
 var completions = &complete.Command{

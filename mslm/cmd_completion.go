@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"strings"
-
-	"github.com/ipinfo/cli/lib/complete"
-	"github.com/ipinfo/cli/lib/complete/install"
-	"github.com/ipinfo/cli/lib/complete/predict"
+	"github.com/mslmio/cli/lib/complete"
+	"github.com/mslmio/cli/lib/complete/install"
+	"github.com/mslmio/cli/lib/complete/predict"
 	"github.com/spf13/pflag"
+	"strings"
 )
 
 var completionsCompletion = &complete.Command{

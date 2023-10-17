@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/ipinfo/cli/lib/complete"
+	"github.com/mslmio/cli/lib/complete"
 )
 
 var completionsVersion = &complete.Command{}
