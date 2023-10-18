@@ -2,7 +2,7 @@ package predict
 
 import (
 	"fmt"
-	"github.com/ipinfo/cli/lib/complete"
+	"github.com/mslmio/cli/lib/complete"
 	"strings"
 )
 

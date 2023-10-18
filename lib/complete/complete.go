@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ipinfo/cli/lib/complete/install"
+	"github.com/mslmio/cli/lib/complete/install"
 )
 
 // Completer is an interface that a command line should implement in order to

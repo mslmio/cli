@@ -3,7 +3,7 @@ package predict
 import (
 	"testing"
 
-	"github.com/ipinfo/cli/lib/complete"
+	"github.com/mslmio/cli/lib/complete"
 	"github.com/stretchr/testify/assert"
 )
 

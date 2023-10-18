@@ -1,7 +1,7 @@
 // Package predict provides helper functions for completion predictors.
 package predict
 
-import "github.com/ipinfo/cli/lib/complete"
+import "github.com/mslmio/cli/lib/complete"
 
 // Set predicts a set of predefined values.
 type Set []string
