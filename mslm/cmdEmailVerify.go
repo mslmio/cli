@@ -1,12 +1,16 @@
 package main
 
 import (
+	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"github.com/mslmio/cli/lib"
 	"github.com/mslmio/cli/lib/complete"
 	"github.com/mslmio/cli/lib/complete/predict"
+	"github.com/mslmio/sdk-go/email_verify"
 	"github.com/mslmio/sdk-go/mslm"
 	"github.com/spf13/pflag"
+	"os"
 )
 
 var completionsEmailVerify = &complete.Command{
@@ -46,6 +50,33 @@ Options:
 `, progBase)
 }
 
+func marshalToCSV(data *email_verify.SingleVerifyResp) {
+	// Create a CSV writer that writes to os.Stdout
+	csvWriter := csv.NewWriter(os.Stdout)
+
+	// Create a slice of string slices for the CSV data
+	records := [][]string{
+		{"email", "username", "domain", "malformed", "suggestion", "status", "has_mailbox", "accept_all", "disposable", "free", "role", "mx"},
+		{data.Email, data.Username, data.Domain, fmt.Sprintf("%v", data.Malformed), data.Suggestion, data.Status, fmt.Sprintf("%v", data.HasMailbox), fmt.Sprintf("%v", data.AcceptAll), fmt.Sprintf("%v", data.Disposable), fmt.Sprintf("%v", data.Free), fmt.Sprintf("%v", data.Role), ""},
+	}
+
+	// Convert the mx field to a JSON string
+	mxJSON, err := json.Marshal(data.Mx)
+	if err != nil {
+		fmt.Println("JSON Marshaling Error:", err)
+		return
+	}
+
+	// Set the JSON representation of mx in the records
+	records[1][11] = string(mxJSON)
+
+	// Write the CSV data
+	csvWriter.WriteAll(records)
+
+	// Flush the writer to ensure data is written
+	csvWriter.Flush()
+}
+
 func cmdEmailVerify() error {
 	var fYAML bool
 	var fJSON bool
@@ -76,7 +107,7 @@ func cmdEmailVerify() error {
 	if fYAML {
 		err = lib.OutputYAML(resp)
 	} else if fCSV {
-		err = lib.OutputCSV(resp)
+		marshalToCSV(resp)
 	} else {
 		err = lib.OutputJSON(resp)
 	}
