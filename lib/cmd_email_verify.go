@@ -106,8 +106,5 @@ func CmdEmailVerify(f CmdEmailVerifyFlags, args []string, printHelp func()) erro
 		err = OutputJSON(resp)
 	}
 
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
