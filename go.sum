@@ -9,8 +9,8 @@ github.com/hashicorp/go-multierror v1.1.1 h1:H5DkEtf6CXdFp0N0Em5UCwQpXMWke8IA0+l
 github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9/fmwbPZ6JB6eMoM=
 github.com/jszwec/csvutil v1.4.0 h1:ro7gZN8PRsyNUEX8qE/eYPE5/kffEXMs+4eRcOd1oUk=
 github.com/jszwec/csvutil v1.4.0/go.mod h1:Rpu7Uu9giO9subDyMCIQfHVDuLrcaC36UA4YcJjGBkg=
-github.com/mslmio/sdk-go v0.0.0-20230901093027-078ffe756ad8 h1:7f6lspNfqM3EbNqpwRTv5UQ3Xd0aWhaF7m9skYkHH5E=
-github.com/mslmio/sdk-go v0.0.0-20230901093027-078ffe756ad8/go.mod h1:bgB7yQXCREmOBY509K4R0jpUOkMJYcaG1BepkX9iL+k=
+github.com/mslmio/sdk-go v0.0.0-20231031133344-e128beb51d3c h1:zLHz2uQQ/9dDMqB1RVx+av72rHPtSctrvzL5rNq5H08=
+github.com/mslmio/sdk-go v0.0.0-20231031133344-e128beb51d3c/go.mod h1:bgB7yQXCREmOBY509K4R0jpUOkMJYcaG1BepkX9iL+k=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

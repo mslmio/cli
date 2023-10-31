@@ -13,7 +13,7 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
-	github.com/mslmio/sdk-go v0.0.0-20230901093027-078ffe756ad8 // indirect
+	github.com/mslmio/sdk-go v0.0.0-20231031133344-e128beb51d3c // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 )
