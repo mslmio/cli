@@ -24,26 +24,29 @@ var completionsEmailVerify = &complete.Command{
 	},
 }
 
-// printHelpEmailVerify prints the help message for the "email-verify" command.
+// printHelpEmailVerify prints the help message for the "emailverify" command.
 func printHelpEmailVerify() {
 	fmt.Printf(
 		`Usage: %s emailverify [<opts>] <email>
 
 Examples:
   # Verify an email address.
-  $ %[1]s emailverify abc@example.com
+  %[1]s emailverify abc@example.com
 
 Options:
-  --token, -t <token>
-	use <token> as API token.
-  --yaml, -y
-	output as YAML.
-  --json, -j
-	output as JSON.
-  --csv, -c
-	output as CSV.
-  --help, -h
-    show help.
+	General:
+		--help, -h
+			show help.
+
+	Formats:
+    --token, -t <token>
+	    use <token> as API token.
+    --yaml, -y
+	    output as Yaml.
+    --json, -j
+	    output as Json.
+    --csv, -c
+	    output as Csv.
 `, progBase)
 }
 

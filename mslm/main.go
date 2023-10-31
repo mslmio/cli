@@ -17,24 +17,24 @@ func printHelp() {
 		`Usage: %s <cmd> [<opts>] [<args>]
 
 Commands:
-  emailverify   verify an email address.
-  completion    install or output shell auto-completion script.
-  version       show current version.
+  emailverify  verify an email address.
+  completion   install or output shell auto-completion script.
+  version      show current version.
 
 Options:
   General:
     --help, -h
-    show help.
+      show help.
     --version, -v
-    print binary release number.
+      print binary release number.
 
   Formats:
     --json, -j
-    output JSON format.
+      output Json format.
     --csv, -c
-    output CSV format.
+      output Csv format.
     --yaml, -y
-    output YAML format.
+      output Yaml format.
 `, progBase)
 }
 

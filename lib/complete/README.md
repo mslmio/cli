@@ -1,6 +1,6 @@
 # complete
 
-[![GoDoc](https://img.shields.io/badge/pkg.go.dev-doc-blue)](http://pkg.go.dev/github.com/ipinfo/cli/lib/complete)
+[![GoDoc](https://img.shields.io/badge/pkg.go.dev-doc-blue)](http://pkg.go.dev/github.com/mslmio/cli/lib/complete)
 
 Writing bash completion scripts is a hard work, usually done in the bash
 scripting language. This package can help produce a binary which will serve as

@@ -20,7 +20,7 @@ $ROOT/scripts/build-archive-all.sh "$CLI" "$VSN"
 
 # release
 gh release create ${CLI}-${VSN}                                               \
-    -R ipinfo/mslm                                                             \
+    -R mslm/cli                                                             \
     -t "${CLI}-${VSN}"                                                        \
     $ROOT/build/${CLI}_${VSN}*.tar.gz                                         \
     $ROOT/build/${CLI}_${VSN}*.zip                                            \
