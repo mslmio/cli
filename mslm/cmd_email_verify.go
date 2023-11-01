@@ -42,11 +42,11 @@ Options:
     --token, -t <token>
       use <token> as API token.
     --yaml, -y
-      output as Yaml.
+      output as YAML.
     --json, -j
-      output as Json.
+      output as JSON.
     --csv, -c
-      output as Csv.
+      output as CSV.
 `, progBase)
 }
 
