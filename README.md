@@ -29,7 +29,7 @@ go get github.com/mslmio/cli
 
 ## About Mslm
 
-mslm focuses on producing world-class business solutions. It’s the
+Mslm focuses on producing world-class business solutions. It’s the
 bread-and-butter of our business to prioritize quality on everything we touch.
 Excellence is a core value that defines our culture from top to bottom.
 
