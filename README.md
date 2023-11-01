@@ -17,6 +17,7 @@ go get github.com/mslmio/cli
 ## Setting Up
 
 Start a local Go project if you don't have one:
+
 ```bash
 go mod init
 ```
