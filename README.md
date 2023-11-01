@@ -5,6 +5,7 @@
 The Mslm CLI is a powerful command-line tool designed to provide you access to lots of utilities to benefit from Mslm's services.
 
 ## Requirements
+
 - Go 1.18 or above.
 
 ## Installation
