@@ -2,7 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/mslmio/cli)](https://pkg.go.dev/github.com/mslmio/cli)
 
-The mslm cli Client is a powerful command-line tool designed to interact with mslm's APIs efficiently. It provides seamless access to various mslm services, allowing users to manage and utilize functionalities from the terminal.
+The Mslm CLI is a powerful command-line tool designed to provide you access to lots of utilities to benefit from Mslm's services.
 
 ## Requirements
 - Go 1.18 or above.
