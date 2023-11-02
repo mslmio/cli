@@ -50,7 +50,7 @@ Options:
 `, progBase)
 }
 
-// cmdEmailVerify is the handler for the "email-verify" command.
+// cmdEmailVerify is the handler for the "emailverify" command.
 func cmdEmailVerify() error {
 	f := lib.CmdEmailVerifyFlags{}
 	f.Init()
