@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/pflag"
 )
 
-// completionsEmailVerify defines the completions for the "email-verify" command.
+// completionsEmailVerify defines the completions for the "emailverify" command.
 var completionsEmailVerify = &complete.Command{
 	Flags: map[string]complete.Predictor{
 		"-t":      predict.Nothing,
