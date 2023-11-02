@@ -24,11 +24,11 @@ Options:
 
   Formats:
     --json, -j
-      output Json format.
+      output JSON format.
     --csv, -c
-      output Csv format.
+      output CSV format.
     --yaml, -y
-      output Yaml format.
+      output YAML format.
 `, progBase)
 }
 

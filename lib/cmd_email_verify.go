@@ -25,17 +25,17 @@ func (f *CmdEmailVerifyFlags) Init() {
 	pflag.BoolVarP(
 		&f.Json,
 		"json", "j", false,
-		"output as Json.",
+		"output as JSON.",
 	)
 	pflag.BoolVarP(
 		&f.Csv,
 		"csv", "c", false,
-		"output as Csv.",
+		"output as CSV.",
 	)
 	pflag.BoolVarP(
 		&f.Yaml,
 		"yaml", "y", false,
-		"output as Yaml.",
+		"output as YAML.",
 	)
 	pflag.StringVarP(
 		&f.token,
