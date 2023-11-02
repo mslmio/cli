@@ -12,32 +12,6 @@ var version = "1.0.0"
 // global flags.
 var fHelp bool
 
-func printHelp() {
-	fmt.Printf(
-		`Usage: %s <cmd> [<opts>] [<args>]
-
-Commands:
-  emailverify  verify an email address.
-  completion   install or output shell auto-completion script.
-  version      show current version.
-
-Options:
-  General:
-    --help, -h
-      show help.
-    --version, -v
-      print binary release number.
-
-  Formats:
-    --json, -j
-      output Json format.
-    --csv, -c
-      output Csv format.
-    --yaml, -y
-      output Yaml format.
-`, progBase)
-}
-
 func main() {
 	var err error
 	var cmd string
@@ -56,7 +30,7 @@ func main() {
 	case cmd == "version" || cmd == "vsn" || cmd == "v":
 		err = cmdVersion()
 	default:
-		printHelp()
+		err = cmdDefault()
 	}
 
 	if err != nil {
