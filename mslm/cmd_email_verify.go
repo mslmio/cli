@@ -34,19 +34,19 @@ Examples:
   %[1]s emailverify abc@example.com
 
 Options:
-	General:
-		--help, -h
-			show help.
+  General:
+    --help, -h
+    show help.
 
-	Formats:
+  Formats:
     --token, -t <token>
-	    use <token> as API token.
+      use <token> as API token.
     --yaml, -y
-	    output as Yaml.
+      output as YAML.
     --json, -j
-	    output as Json.
+      output as JSON.
     --csv, -c
-	    output as Csv.
+      output as CSV.
 `, progBase)
 }
 
