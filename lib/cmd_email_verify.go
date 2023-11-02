@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/pflag"
 )
 
-// CmdEmailVerifyFlags defines the flags for the "email-verify" command.
+// CmdEmailVerifyFlags defines the flags for the "emailverify" command.
 type CmdEmailVerifyFlags struct {
 	Help  bool
 	Json  bool
