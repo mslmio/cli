@@ -42,7 +42,6 @@ func (f *CmdEmailVerifyFlags) Init() {
 		"token", "t", "",
 		"the token to use.",
 	)
-
 }
 
 // CmdEmailVerify is the handler for the "emailverify" command.
