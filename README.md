@@ -1,18 +1,36 @@
-# cli
+# Mslm CLI
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/mslmio/cli)](https://pkg.go.dev/github.com/mslmio/cli)
+
+The Mslm CLI is a powerful command-line tool designed to provide you access to lots of utilities to benefit from Mslm's services.
+
+## Requirements
+
+- Go 1.18 or above.
 
 ## Installation
 
-### Using `git`
+```bash
+go get github.com/mslmio/cli
+```
 
-Installing from source requires at least the Golang version specified in
-`go.mod`. You can install the Golang toolchain from
-[the official site](https://golang.org/doc/install).
+## Setting Up
 
-Once the correct Golang version is installed, simply clone the repository and
-install the binary:
+Start a local Go project if you don't have one:
 
 ```bash
-git clone https://github.com/mslmio/cli
-cd cli
-go install ./mslm
-$GOPATH/bin/mslm
+go mod init
+```
+
+Install the package:
+```bash
+go get github.com/mslmio/cli
+```
+
+## About Mslm
+
+Mslm focuses on producing world-class business solutions. It’s the
+bread-and-butter of our business to prioritize quality on everything we touch.
+Excellence is a core value that defines our culture from top to bottom.
+
+[![image](https://avatars.githubusercontent.com/u/50307970?s=200&v=4)](https://mslm.io/)
