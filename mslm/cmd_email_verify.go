@@ -36,7 +36,7 @@ Examples:
 Options:
   General:
     --help, -h
-    show help.
+      show help.
 
   Formats:
     --token, -t <token>
