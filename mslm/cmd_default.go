@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/spf13/pflag"
 	"os"
+
+	"github.com/spf13/pflag"
 )
 
 func printHelpDefault() {
@@ -12,6 +13,7 @@ func printHelpDefault() {
 
 Commands:
   emailverify  verify an email address.
+  signup       register yourself for an Mslm account.
   completion   install or output shell auto-completion script.
   version      show current version.
 
