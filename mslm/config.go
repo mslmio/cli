@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 
 	"go.etcd.io/bbolt"
-	bolt "go.etcd.io/bbolt"
 )
 
 var gConfig Config
@@ -48,7 +47,7 @@ func SaveKeyInDB(apiKey string) error {
 	}
 
 	// Open the database.
-	db, err := bolt.Open(path, 0600, nil)
+	db, err := bbolt.Open(path, 0600, nil)
 	if err != nil {
 		return err
 	}
