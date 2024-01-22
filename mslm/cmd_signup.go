@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/pkg/browser"
-	bolt "go.etcd.io/bbolt"
 )
 
 type signupCli struct {
@@ -83,32 +82,8 @@ func cmdSignup() error {
 				return err
 			}
 
-			path, err := DbFilePath()
-			if err != nil {
-				return err
-			}
-
-			// Open the database.
-			db, err := bolt.Open(path, 0600, nil)
-			if err != nil {
-				return err
-			}
-			defer db.Close()
-
-			config, err := GetConfig(db)
-			if err != nil {
-				gConfig.ApiKey = body.ApiKey
-
-				err = SaveConfig(gConfig, db)
-				if err != nil {
-					return err
-				}
-			} else {
-				config.ApiKey = body.ApiKey
-				err = SaveConfig(config, db)
-				if err != nil {
-					return err
-				}
+			if err := SaveKeyInDB(body.ApiKey); err != nil {
+				return fmt.Errorf("could not save the API key: %w", err)
 			}
 
 			fmt.Println("API Key fetched successfully.")

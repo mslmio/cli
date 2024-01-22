@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"go.etcd.io/bbolt"
+	bolt "go.etcd.io/bbolt"
 )
 
 var gConfig Config
@@ -38,6 +39,38 @@ func DbFilePath() (string, error) {
 	}
 
 	return filepath.Join(confDir, "config.db"), nil
+}
+
+func SaveKeyInDB(apiKey string) error {
+	path, err := DbFilePath()
+	if err != nil {
+		return err
+	}
+
+	// Open the database.
+	db, err := bolt.Open(path, 0600, nil)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	config, err := GetConfig(db)
+	if err != nil {
+		gConfig.ApiKey = apiKey
+
+		err = SaveConfig(gConfig, db)
+		if err != nil {
+			return err
+		}
+	} else {
+		config.ApiKey = apiKey
+		err = SaveConfig(config, db)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func SaveConfig(config Config, db *bbolt.DB) error {
