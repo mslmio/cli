@@ -8,6 +8,7 @@ import (
 var completions = &complete.Command{
 	Sub: map[string]*complete.Command{
 		"emailverify": completionsEmailVerify,
+		"signup":      completionsSignup,
 		"completion":  completionsCompletion,
 		"version":     completionsVersion,
 	},

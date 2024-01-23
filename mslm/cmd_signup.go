@@ -8,8 +8,48 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/mslmio/cli/lib/complete"
+	"github.com/mslmio/cli/lib/complete/predict"
 	"github.com/pkg/browser"
+	"github.com/spf13/pflag"
 )
+
+// completionsSignup defines the completions for the "signup" command.
+var completionsSignup = &complete.Command{
+	Flags: map[string]complete.Predictor{
+		"-h":     predict.Nothing,
+		"--help": predict.Nothing,
+		"--init": predict.Nothing,
+		"-i":     predict.Nothing,
+	},
+}
+
+// printHelpSignup prints the help message for the "signup" command.
+func printHelpSignup() {
+	fmt.Printf(
+		`Usage: %s signup [<opts>]
+
+Description:
+  The command opens up the signup page on your browser.
+
+  The API key is automatically fetched after the signup flow is completed
+  and when the email is verified.
+
+Examples:
+  # Signup command.
+  $ %[1]s signup --init
+
+  # Help
+  $ %[1]s signup
+
+Options:
+  General:
+    --init, -i
+      initialize user signup.
+    --help, -h
+      show help.
+`, progBase)
+}
 
 type responseSignupUrl struct {
 	Data signupCli `json:"data"`
@@ -28,6 +68,16 @@ type apiKeyCli struct {
 }
 
 func cmdSignup() error {
+	var fInit bool
+	pflag.BoolVarP(&fHelp, "help", "h", false, "show help.")
+	pflag.BoolVarP(&fInit, "init", "i", false, "initiliaze user signup.")
+	pflag.Parse()
+
+	if fHelp || !fInit {
+		printHelpSignup()
+		return nil
+	}
+
 	res, err := http.Get("http://localhost:1786/_/api/u/v1/signup/cli")
 	if res.StatusCode == http.StatusTooManyRequests {
 		return fmt.Errorf("too many requests")
@@ -72,7 +122,7 @@ func cmdSignup() error {
 	for {
 		count++
 
-		res, err := http.Get("http://localhost:1786/_/api/u/v1/signup/check?cli_token=" + cliToken)
+		res, err := http.Get("http://localhost:1786/_/api/u/v1/signup/cli/check?cli_token=" + cliToken)
 		if err != nil {
 			return err
 		}
