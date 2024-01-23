@@ -11,8 +11,16 @@ import (
 	"github.com/pkg/browser"
 )
 
+type responseSignupUrl struct {
+	Data signupCli `json:"data"`
+}
+
 type signupCli struct {
-	SignupURL string `json:"signupURL"`
+	SignupUrl string `json:"signup_url"`
+}
+
+type responseApiKey struct {
+	Data apiKeyCli `json:"data"`
 }
 
 type apiKeyCli struct {
@@ -34,20 +42,20 @@ func cmdSignup() error {
 	if err != nil {
 		return err
 	}
-	body := &signupCli{}
+	body := &responseSignupUrl{}
 	err = json.Unmarshal(rawBody, body)
 	if err != nil {
 		return err
 	}
-	browser.OpenURL(body.SignupURL)
+	browser.OpenURL(body.Data.SignupUrl)
 	fmt.Println("If the link does not open, please go to this link to get your API key:")
 	fmt.Println("")
-	fmt.Printf("%v\n", body.SignupURL)
+	fmt.Printf("%v\n", body.Data.SignupUrl)
 	fmt.Println("")
 	fmt.Println("Press [Enter] when done if not automatically detected.")
 
 	// Retrieving CLI token from signup URL.
-	parsedURL, err := url.Parse(body.SignupURL)
+	parsedURL, err := url.Parse(body.Data.SignupUrl)
 	if err != nil {
 		fmt.Println("Error parsing URL:", err)
 		return err
@@ -76,13 +84,13 @@ func cmdSignup() error {
 			if err != nil {
 				return err
 			}
-			body := &apiKeyCli{}
+			body := &responseApiKey{}
 			err = json.Unmarshal(rawBody, body)
 			if err != nil {
 				return err
 			}
 
-			if err := SaveKeyInDB(body.ApiKey); err != nil {
+			if err := SaveKeyInDB(body.Data.ApiKey); err != nil {
 				return fmt.Errorf("could not save the API key: %w", err)
 			}
 
