@@ -63,12 +63,6 @@ func cmdLogin() error {
 	// get args without subcommand.
 	args := pflag.Args()[1:]
 
-	// only key arg allowed.
-	if len(args) == 0 && fKey == "" {
-		printHelpLogin()
-		return nil
-	}
-
 	// allow only flag or arg for key but not both.
 	if fKey != "" && len(args) > 0 {
 		return errors.New("ambiguous key input source")
