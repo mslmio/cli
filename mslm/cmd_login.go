@@ -26,10 +26,10 @@ var completionsLogin = &complete.Command{
 
 func printHelpLogin() {
 	fmt.Printf(
-		`Usage: %s login [<opts>] [<apiKey>]
+		`Usage: %s login [<opts>] [<api-key>]
 Examples:
   # Login command with key flag.
-  $ %[1]s login --key <apiKey>
+  $ %[1]s login --key <api-key>
 
   # Authentication without key flag.
   $ %[1]s login --init
@@ -37,7 +37,7 @@ Examples:
 Options:
   --init, -i
     initialize user login.
-  --key <apiKey>, -k <apiKey>
+  --key <api-key>, -k <api-key>
     API key to login with.
     (this is potentially unsafe; let the CLI prompt you instead).
   --no-check
