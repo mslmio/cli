@@ -19,8 +19,6 @@ var completionsSignup = &complete.Command{
 	Flags: map[string]complete.Predictor{
 		"-h":     predict.Nothing,
 		"--help": predict.Nothing,
-		"--init": predict.Nothing,
-		"-i":     predict.Nothing,
 	},
 }
 
@@ -36,16 +34,11 @@ Description:
   and when the email is verified.
 
 Examples:
-  # Signup command.
-  $ %[1]s signup --init
-
-  # Help message.
+  # Signup.
   $ %[1]s signup
 
 Options:
   General:
-    --init, -i
-      initialize user signup.
     --help, -h
       show help.
 `, progBase)
@@ -68,22 +61,20 @@ type apiKeyCli struct {
 }
 
 func cmdSignup() error {
-	var fInit bool
 	pflag.BoolVarP(&fHelp, "help", "h", false, "show help.")
-	pflag.BoolVarP(&fInit, "init", "i", false, "initiliaze user signup.")
 	pflag.Parse()
 
-	if fHelp || !fInit {
+	if fHelp {
 		printHelpSignup()
 		return nil
 	}
-
-	res, err := http.Get("http://localhost:1786/_/api/u/v1/signup/cli")
-	if res.StatusCode == http.StatusTooManyRequests {
-		return fmt.Errorf("too many requests")
-	}
+	res, err := http.Get("https://mslm.io/_/api/u/v1/signup/cli")
 	if err != nil {
 		return err
+	}
+
+	if res.StatusCode == http.StatusTooManyRequests {
+		return fmt.Errorf("too many requests")
 	}
 	defer res.Body.Close()
 
@@ -92,11 +83,13 @@ func cmdSignup() error {
 	if err != nil {
 		return err
 	}
+
 	body := &responseSignupUrl{}
 	err = json.Unmarshal(rawBody, body)
 	if err != nil {
 		return err
 	}
+
 	browser.OpenURL(body.Data.SignupUrl)
 	fmt.Println("If the link does not open, please go to this link to get your API key:")
 	fmt.Println("")
@@ -110,6 +103,7 @@ func cmdSignup() error {
 		fmt.Println("Error parsing URL:", err)
 		return err
 	}
+
 	cliToken := parsedURL.Query().Get("cli_token")
 	if cliToken == "" {
 		fmt.Println("CLI token not found in URL")
@@ -122,14 +116,13 @@ func cmdSignup() error {
 	for {
 		count++
 
-		res, err := http.Get("http://localhost:1786/_/api/u/v1/signup/cli/check?cli_token=" + cliToken)
+		res, err := http.Get("https://mslm.io/_/api/u/v1/signup/cli/check?cli_token=" + cliToken)
 		if err != nil {
 			return err
 		}
 		defer res.Body.Close()
 
 		if res.StatusCode == http.StatusOK {
-
 			rawBody, err := io.ReadAll(res.Body)
 			if err != nil {
 				return err
