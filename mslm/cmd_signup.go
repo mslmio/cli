@@ -64,7 +64,7 @@ type responseApiKey struct {
 }
 
 type apiKeyCli struct {
-	ApiKey string `json:"apiKey"`
+	ApiKey string `json:"api_key"`
 }
 
 func cmdSignup() error {
