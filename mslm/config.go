@@ -9,6 +9,11 @@ import (
 	"go.etcd.io/bbolt"
 )
 
+const (
+	ConfigBucket = "config"
+	ConfigKey    = "configKey"
+)
+
 var gConfig Config
 
 type Config struct {
@@ -74,7 +79,7 @@ func SaveKeyInDB(apiKey string) error {
 
 func SaveConfig(config Config, db *bbolt.DB) error {
 	return db.Update(func(tx *bbolt.Tx) error {
-		bucket, err := tx.CreateBucketIfNotExists([]byte("config"))
+		bucket, err := tx.CreateBucketIfNotExists([]byte(ConfigBucket))
 		if err != nil {
 			return err
 		}
@@ -86,7 +91,7 @@ func SaveConfig(config Config, db *bbolt.DB) error {
 		}
 
 		// Save serialized config to the bucket
-		return bucket.Put([]byte("configKey"), configBytes)
+		return bucket.Put([]byte(ConfigKey), configBytes)
 	})
 }
 
@@ -94,15 +99,15 @@ func GetConfig(db *bbolt.DB) (Config, error) {
 	var config Config
 
 	err := db.View(func(tx *bbolt.Tx) error {
-		bucket := tx.Bucket([]byte("config"))
+		bucket := tx.Bucket([]byte(ConfigBucket))
 		if bucket == nil {
-			return fmt.Errorf("config bucket not found")
+			return fmt.Errorf("%s bucket not found", ConfigBucket)
 		}
 
 		// Retrieve serialized config from the bucket
-		configBytes := bucket.Get([]byte("configKey"))
+		configBytes := bucket.Get([]byte(ConfigKey))
 		if configBytes == nil {
-			return fmt.Errorf("config key not found")
+			return fmt.Errorf("%s key not found", ConfigKey)
 		}
 
 		// Unmarshal JSON to struct
