@@ -39,7 +39,7 @@ Examples:
   # Signup command.
   $ %[1]s signup --init
 
-  # Help
+  # Help message.
   $ %[1]s signup
 
 Options:
