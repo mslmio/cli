@@ -19,8 +19,6 @@ var completionsLogin = &complete.Command{
 		"--no-check": predict.Nothing,
 		"-h":         predict.Nothing,
 		"--help":     predict.Nothing,
-		"--init":     predict.Nothing,
-		"-i":         predict.Nothing,
 	},
 }
 
@@ -32,11 +30,9 @@ Examples:
   $ %[1]s login --key <api-key>
 
   # Authentication without key flag.
-  $ %[1]s login --init
+  $ %[1]s login
 
 Options:
-  --init, -i
-    initialize user login.
   --key <api-key>, -k <api-key>
     API key to login with.
     (this is potentially unsafe; let the CLI prompt you instead).
@@ -53,12 +49,10 @@ func cmdLogin() error {
 	var fKey string
 	var fNoCheck bool
 	var fHelp bool
-	var fInit bool
 
 	pflag.StringVarP(&fKey, "key", "k", "", "the API key to save.")
 	pflag.BoolVar(&fNoCheck, "no-check", false, "disable checking if API key is valid.")
 	pflag.BoolVarP(&fHelp, "help", "h", false, "show help.")
-	pflag.BoolVarP(&fInit, "init", "i", false, "initiliaze user login.")
 	pflag.Parse()
 
 	if fHelp {
@@ -70,7 +64,7 @@ func cmdLogin() error {
 	args := pflag.Args()[1:]
 
 	// only key arg allowed.
-	if len(args) == 0 && fKey == "" && !fInit {
+	if len(args) == 0 && fKey == "" {
 		printHelpLogin()
 		return nil
 	}
