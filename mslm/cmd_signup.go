@@ -68,6 +68,7 @@ func cmdSignup() error {
 		printHelpSignup()
 		return nil
 	}
+
 	res, err := http.Get("https://mslm.io/_/api/u/v1/signup/cli")
 	if err != nil {
 		return err
@@ -115,7 +116,6 @@ func cmdSignup() error {
 	count := 0
 	for {
 		count++
-
 		res, err := http.Get("https://mslm.io/_/api/u/v1/signup/cli/check?cli_token=" + cliToken)
 		if err != nil {
 			return err
@@ -127,14 +127,26 @@ func cmdSignup() error {
 			if err != nil {
 				return err
 			}
+
 			body := &responseApiKey{}
 			err = json.Unmarshal(rawBody, body)
 			if err != nil {
 				return err
 			}
 
-			if err := SaveKeyInDB(body.Data.ApiKey); err != nil {
-				return fmt.Errorf("could not save the API key: %w", err)
+			config, err := GetConfig()
+			if err != nil && config == nil { // If db fails to open.
+				return err
+			} else if err != nil { // If db opens but no config exists.
+				gConfig.ApiKey = body.Data.ApiKey
+				if err = SaveConfig(gConfig); err != nil {
+					return err
+				}
+			} else { // If db opens and a config exists.
+				config.ApiKey = body.Data.ApiKey
+				if err = SaveConfig(*config); err != nil {
+					return err
+				}
 			}
 
 			fmt.Println("API Key fetched successfully.")

@@ -45,39 +45,18 @@ func DbFilePath() (string, error) {
 	return filepath.Join(confDir, "config.db"), nil
 }
 
-func SaveKeyInDB(apiKey string) error {
+func SaveConfig(config Config) error {
 	path, err := DbFilePath()
 	if err != nil {
 		return err
 	}
 
-	// Open the database.
 	db, err := bbolt.Open(path, 0600, nil)
 	if err != nil {
 		return err
 	}
 	defer db.Close()
 
-	config, err := GetConfig(db)
-	if err != nil {
-		gConfig.ApiKey = apiKey
-
-		err = SaveConfig(gConfig, db)
-		if err != nil {
-			return err
-		}
-	} else {
-		config.ApiKey = apiKey
-		err = SaveConfig(config, db)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func SaveConfig(config Config, db *bbolt.DB) error {
 	return db.Update(func(tx *bbolt.Tx) error {
 		bucket, err := tx.CreateBucketIfNotExists([]byte(ConfigBucket))
 		if err != nil {
@@ -95,10 +74,21 @@ func SaveConfig(config Config, db *bbolt.DB) error {
 	})
 }
 
-func GetConfig(db *bbolt.DB) (Config, error) {
+func GetConfig() (*Config, error) {
 	var config Config
 
-	err := db.View(func(tx *bbolt.Tx) error {
+	path, err := DbFilePath()
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := bbolt.Open(path, 0600, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	err = db.View(func(tx *bbolt.Tx) error {
 		bucket := tx.Bucket([]byte(ConfigBucket))
 		if bucket == nil {
 			return fmt.Errorf("%s bucket not found", ConfigBucket)
@@ -115,8 +105,8 @@ func GetConfig(db *bbolt.DB) (Config, error) {
 	})
 
 	if err != nil {
-		return Config{}, err
+		return &config, err
 	}
 
-	return config, nil
+	return &config, nil
 }
