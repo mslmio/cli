@@ -173,7 +173,7 @@ func checkValidity(key string) error {
 
 func doesKeyExist(key string) (bool, error) {
 	// make API req for true key validity.
-	res, err := http.Get("http://localhost:1793/api/v1/acct/apikey/zapier_check/0aa76ca0-bed2-4d07-815c-381c1b4c4084?apikey=" + key)
+	res, err := http.Get("https://mslm.io/api/v1/acct/apikey/zapier_check/0aa76ca0-bed2-4d07-815c-381c1b4c4084?apikey=" + key)
 	if err != nil {
 		return false, err
 	}
