@@ -63,6 +63,12 @@ func cmdLogin() error {
 	// get args without subcommand.
 	args := pflag.Args()[1:]
 
+	// only key arg allowed.
+	if len(args) > 1 {
+		printHelpLogin()
+		return nil
+	}
+
 	// allow only flag or arg for key but not both.
 	if fKey != "" && len(args) > 0 {
 		return errors.New("ambiguous key input source")
@@ -81,8 +87,19 @@ func cmdLogin() error {
 			}
 		}
 
-		if err := SaveKeyInDB(key); err != nil {
-			return fmt.Errorf("could not save the API key: %w", err)
+		config, err := GetConfig()
+		if err != nil && config == nil { // If db fails to open.
+			return err
+		} else if err != nil { // If db opens but no config exists.
+			gConfig.ApiKey = key
+			if err = SaveConfig(gConfig); err != nil {
+				return err
+			}
+		} else { // If db opens and a config exists.
+			config.ApiKey = key
+			if err = SaveConfig(*config); err != nil {
+				return err
+			}
 		}
 
 		fmt.Println("done")
@@ -100,8 +117,19 @@ func cmdLogin() error {
 		}
 	}
 
-	if err := SaveKeyInDB(newKey); err != nil {
-		return fmt.Errorf("could not save the API key: %w", err)
+	config, err := GetConfig()
+	if err != nil && config == nil { // If db fails to open.
+		return err
+	} else if err != nil { // If db opens but no config exists.
+		gConfig.ApiKey = newKey
+		if err = SaveConfig(gConfig); err != nil {
+			return err
+		}
+	} else { // If db opens and a config exists.
+		config.ApiKey = newKey
+		if err = SaveConfig(*config); err != nil {
+			return err
+		}
 	}
 
 	fmt.Println("done")
