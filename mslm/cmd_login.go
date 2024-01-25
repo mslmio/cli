@@ -45,7 +45,6 @@ Options:
 }
 
 func cmdLogin() error {
-	//var opt int
 	var fKey string
 	var fNoCheck bool
 	var fHelp bool
