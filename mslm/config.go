@@ -48,6 +48,7 @@ func UpdateConfigField(config *Config, fieldName string, newValue any) *Config {
 	case "ApiKey":
 		config.ApiKey = newValue.(string)
 	}
+
 	return config
 }
 
