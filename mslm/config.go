@@ -14,13 +14,11 @@ const (
 	ConfigKey    = "configKey"
 )
 
-var gConfig Config
-
 type Config struct {
 	ApiKey string `json:"apiKey"`
 }
 
-// gets the global config directory, creating it if necessary.
+// Gets the global config directory, creating it if necessary.
 func getDbFileDir() (string, error) {
 	cdir, err := os.UserConfigDir()
 	if err != nil {
@@ -35,7 +33,7 @@ func getDbFileDir() (string, error) {
 	return confDir, nil
 }
 
-// returns the path to the config file.
+// Returns the path to the config file.
 func DbFilePath() (string, error) {
 	confDir, err := getDbFileDir()
 	if err != nil {
@@ -45,7 +43,26 @@ func DbFilePath() (string, error) {
 	return filepath.Join(confDir, "config.db"), nil
 }
 
-func SaveConfig(config Config) error {
+func UpdateConfigField(config *Config, fieldName string, newValue any) *Config {
+	switch fieldName {
+	case "ApiKey":
+		config.ApiKey = newValue.(string)
+	}
+	return config
+}
+
+func SaveConfig(configName string, configValue any) error {
+	// Check if a config already exists.
+	conf, err := GetConfig()
+	if err != nil && conf == nil { // If db fails to open.
+		return err
+	} else if err == nil && conf != nil { // If db opens and a config exists.
+		conf = UpdateConfigField(conf, configName, configValue)
+	} else { // If db opens but no config exists.
+		conf = &Config{}
+		conf = UpdateConfigField(conf, configName, configValue)
+	}
+
 	path, err := DbFilePath()
 	if err != nil {
 		return err
@@ -63,13 +80,13 @@ func SaveConfig(config Config) error {
 			return err
 		}
 
-		// Marshal config struct to JSON
-		configBytes, err := json.Marshal(config)
+		// Marshal config struct to JSON.
+		configBytes, err := json.Marshal(*conf)
 		if err != nil {
 			return err
 		}
 
-		// Save serialized config to the bucket
+		// Save serialized config to the bucket.
 		return bucket.Put([]byte(ConfigKey), configBytes)
 	})
 }
@@ -94,13 +111,13 @@ func GetConfig() (*Config, error) {
 			return fmt.Errorf("%s bucket not found", ConfigBucket)
 		}
 
-		// Retrieve serialized config from the bucket
+		// Retrieve serialized config from the bucket.
 		configBytes := bucket.Get([]byte(ConfigKey))
 		if configBytes == nil {
 			return fmt.Errorf("%s key not found", ConfigKey)
 		}
 
-		// Unmarshal JSON to struct
+		// Unmarshal JSON to struct.
 		return json.Unmarshal(configBytes, &config)
 	})
 

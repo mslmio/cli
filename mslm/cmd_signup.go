@@ -28,7 +28,7 @@ func printHelpSignup() {
 		`Usage: %s signup [<opts>]
 
 Description:
-  The command opens up the signup page on your browser.
+  Registers a new account on Mslm.
 
   The API key is automatically fetched after the signup flow is completed
   and when the email is verified.
@@ -134,19 +134,8 @@ func cmdSignup() error {
 				return err
 			}
 
-			config, err := GetConfig()
-			if err != nil && config == nil { // If db fails to open.
+			if err = SaveConfig("ApiKey", body.Data.ApiKey); err != nil {
 				return err
-			} else if err != nil { // If db opens but no config exists.
-				gConfig.ApiKey = body.Data.ApiKey
-				if err = SaveConfig(gConfig); err != nil {
-					return err
-				}
-			} else { // If db opens and a config exists.
-				config.ApiKey = body.Data.ApiKey
-				if err = SaveConfig(*config); err != nil {
-					return err
-				}
 			}
 
 			fmt.Println("API Key fetched successfully.")
