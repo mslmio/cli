@@ -14,7 +14,7 @@ The Mslm CLI is a powerful command-line tool designed to provide you access to l
 go get github.com/mslmio/cli
 ```
 
-## Setting Up
+## Usage
 
 Start a local Go project if you don't have one:
 
