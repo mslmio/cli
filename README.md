@@ -23,6 +23,7 @@ go mod init
 ```
 
 Install the package:
+
 ```bash
 go get github.com/mslmio/cli
 ```
