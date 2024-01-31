@@ -6,8 +6,10 @@ import (
 	"path/filepath"
 )
 
-var progBase = filepath.Base(os.Args[0])
-var version = "1.0.0"
+var (
+	progBase = filepath.Base(os.Args[0])
+	version  = "1.0.0"
+)
 
 // global flags.
 var fHelp bool

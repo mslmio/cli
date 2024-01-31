@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/mslmio/cli/lib"
 	"github.com/mslmio/cli/lib/complete"
 	"github.com/mslmio/cli/lib/complete/predict"

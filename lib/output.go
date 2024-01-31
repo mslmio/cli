@@ -3,9 +3,10 @@ package lib
 import (
 	"encoding/csv"
 	"encoding/json"
+	"os"
+
 	"github.com/jszwec/csvutil"
 	"gopkg.in/yaml.v3"
-	"os"
 )
 
 func OutputYAML(d interface{}) error {

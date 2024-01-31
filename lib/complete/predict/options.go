@@ -2,8 +2,9 @@ package predict
 
 import (
 	"fmt"
-	"github.com/mslmio/cli/lib/complete"
 	"strings"
+
+	"github.com/mslmio/cli/lib/complete"
 )
 
 // Option provides prediction through options pattern.

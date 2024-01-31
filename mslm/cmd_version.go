@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/mslmio/cli/lib/complete"
 )
 
