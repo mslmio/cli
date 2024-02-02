@@ -28,7 +28,7 @@ func printHelpSignup() {
 		`Usage: %s signup [<opts>]
 
 Description:
-  Registers a new account on Mslm.
+  Registers a new user on Mslm.
 
   The API key is automatically fetched after the signup flow is completed
   and when the email is verified.
@@ -69,7 +69,7 @@ func cmdSignup() error {
 		return nil
 	}
 
-	res, err := http.Get("https://mslm.io/_/api/u/v1/signup/cli")
+	res, err := http.Get("https://mslm.io/_/api/u/v1/signup/auto")
 	if err != nil {
 		return err
 	}
@@ -98,16 +98,16 @@ func cmdSignup() error {
 	fmt.Println("")
 	fmt.Println("Press [Enter] when done if not automatically detected.")
 
-	// Retrieving CLI token from signup URL.
+	// Retrieving signup token from signup URL.
 	parsedURL, err := url.Parse(body.Data.SignupUrl)
 	if err != nil {
 		fmt.Println("Error parsing URL:", err)
 		return err
 	}
 
-	cliToken := parsedURL.Query().Get("cli_token")
+	cliToken := parsedURL.Query().Get("signup_token")
 	if cliToken == "" {
-		fmt.Println("CLI token not found in URL")
+		fmt.Println("Signup token not found in URL")
 		return err
 	}
 
@@ -116,17 +116,17 @@ func cmdSignup() error {
 	count := 0
 	for {
 		count++
-		res, err := http.Get("https://mslm.io/_/api/u/v1/signup/cli/check?cli_token=" + cliToken)
+		res, err := http.Get("https://mslm.io/_/api/u/v1/signup/auto/check?signup_token=" + cliToken)
 		if err != nil {
 			return err
 		}
-		defer res.Body.Close()
 
 		if res.StatusCode == http.StatusOK {
 			rawBody, err := io.ReadAll(res.Body)
 			if err != nil {
 				return err
 			}
+			res.Body.Close()
 
 			body := &responseApiKey{}
 			err = json.Unmarshal(rawBody, body)
@@ -141,6 +141,7 @@ func cmdSignup() error {
 			fmt.Println("API Key fetched successfully.")
 			break
 		}
+		res.Body.Close()
 
 		if count == maxAttempts {
 			if _, err := fmt.Scanln(); err != nil {

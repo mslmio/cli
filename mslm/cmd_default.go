@@ -13,7 +13,7 @@ func printHelpDefault() {
 
 Commands:
   emailverify  verify an email address.
-  signup       register yourself for an Mslm account.
+  signup       register a new Mslm user.
   completion   install or output shell auto-completion script.
   version      show current version.
 

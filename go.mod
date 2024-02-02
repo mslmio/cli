@@ -9,7 +9,6 @@ require (
 	github.com/posener/script v1.1.5
 	github.com/stretchr/testify v1.8.1
 	gopkg.in/yaml.v3 v3.0.1
-
 )
 
 require (

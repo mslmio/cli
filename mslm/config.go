@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	ConfigBucket = "config"
-	ConfigKey    = "configKey"
+	CONFIG_BUCKET = "config"
+	CONFIG_KEY    = "configKey"
 )
 
 type Config struct {
@@ -76,7 +76,7 @@ func SaveConfig(configName string, configValue any) error {
 	defer db.Close()
 
 	return db.Update(func(tx *bbolt.Tx) error {
-		bucket, err := tx.CreateBucketIfNotExists([]byte(ConfigBucket))
+		bucket, err := tx.CreateBucketIfNotExists([]byte(CONFIG_BUCKET))
 		if err != nil {
 			return err
 		}
@@ -88,7 +88,7 @@ func SaveConfig(configName string, configValue any) error {
 		}
 
 		// Save serialized config to the bucket.
-		return bucket.Put([]byte(ConfigKey), configBytes)
+		return bucket.Put([]byte(CONFIG_KEY), configBytes)
 	})
 }
 
@@ -107,15 +107,15 @@ func GetConfig() (*Config, error) {
 	defer db.Close()
 
 	err = db.View(func(tx *bbolt.Tx) error {
-		bucket := tx.Bucket([]byte(ConfigBucket))
+		bucket := tx.Bucket([]byte(CONFIG_BUCKET))
 		if bucket == nil {
-			return fmt.Errorf("%s bucket not found", ConfigBucket)
+			return fmt.Errorf("%s bucket not found", CONFIG_BUCKET)
 		}
 
 		// Retrieve serialized config from the bucket.
-		configBytes := bucket.Get([]byte(ConfigKey))
+		configBytes := bucket.Get([]byte(CONFIG_KEY))
 		if configBytes == nil {
-			return fmt.Errorf("%s key not found", ConfigKey)
+			return fmt.Errorf("%s key not found", CONFIG_KEY)
 		}
 
 		// Unmarshal JSON to struct.
