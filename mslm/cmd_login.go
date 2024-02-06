@@ -24,7 +24,8 @@ var completionsLogin = &complete.Command{
 
 func printHelpLogin() {
 	fmt.Printf(
-		`Usage: %s login [<opts>] [<api-key>]
+		`Usage: %s login [<opts>]
+
 Examples:
   # Login command with key flag.
   $ %[1]s login --key <api-key>
