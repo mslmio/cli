@@ -11,6 +11,7 @@ var completions = &complete.Command{
 		"signup":      completionsSignup,
 		"login":       completionsLogin,
 		"logout":      completionsLogout,
+		"config":      completionsConfig,
 		"completion":  completionsCompletion,
 		"version":     completionsVersion,
 	},

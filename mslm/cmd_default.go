@@ -16,6 +16,7 @@ Commands:
   signup       register a new Mslm user.
   login        enter API key associated with Mslm account.
   logout       delete your current API key.
+  config       manage the config.
   completion   install or output shell auto-completion script.
   version      show current version.
 

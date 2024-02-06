@@ -136,3 +136,20 @@ func GetConfig() (*Config, error) {
 
 	return &config, nil
 }
+
+func ClearConfig() error {
+	conf, err := GetConfig()
+	if err != nil && conf == nil {
+		return err
+	} else if err != nil {
+		return fmt.Errorf("config already does not exist")
+	} else {
+		conf = &Config{}
+	}
+
+	if err := SaveConfig(*conf); err != nil {
+		return err
+	}
+
+	return nil
+}
