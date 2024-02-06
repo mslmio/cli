@@ -52,7 +52,7 @@ func UpdateConfigField(config *Config, fieldName string, newValue any) *Config {
 	return config
 }
 
-func SaveConfig(configName string, configValue any) error {
+func SaveFieldInConfig(configName string, configValue any) error {
 	// Check if a config already exists.
 	conf, err := GetConfig()
 	if err != nil && conf == nil { // If db fails to open.
@@ -64,6 +64,14 @@ func SaveConfig(configName string, configValue any) error {
 		conf = UpdateConfigField(conf, configName, configValue)
 	}
 
+	if err := SaveConfig(*conf); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func SaveConfig(config Config) error {
 	path, err := DbFilePath()
 	if err != nil {
 		return err
@@ -82,7 +90,7 @@ func SaveConfig(configName string, configValue any) error {
 		}
 
 		// Marshal config struct to JSON.
-		configBytes, err := json.Marshal(*conf)
+		configBytes, err := json.Marshal(config)
 		if err != nil {
 			return err
 		}
