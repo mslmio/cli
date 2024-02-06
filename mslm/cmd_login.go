@@ -73,7 +73,7 @@ func cmdLogin() error {
 		return errors.New("ambiguous key input source")
 	}
 
-	// get token, from flag or command line.
+	// get key, from flag or command line.
 	// if it exists, we'll exit early as it's an implicit login.
 	key := fKey
 	if len(args) > 0 {
@@ -86,19 +86,8 @@ func cmdLogin() error {
 			}
 		}
 
-		config, err := GetConfig()
-		if err != nil && config == nil { // If db fails to open.
+		if err := SaveConfig("ApiKey", key); err != nil {
 			return err
-		} else if err != nil { // If db opens but no config exists.
-			gConfig.ApiKey = key
-			if err = SaveConfig(gConfig); err != nil {
-				return err
-			}
-		} else { // If db opens and a config exists.
-			config.ApiKey = key
-			if err = SaveConfig(*config); err != nil {
-				return err
-			}
 		}
 
 		fmt.Println("done")
@@ -116,19 +105,8 @@ func cmdLogin() error {
 		}
 	}
 
-	config, err := GetConfig()
-	if err != nil && config == nil { // If db fails to open.
+	if err := SaveConfig("ApiKey", newKey); err != nil {
 		return err
-	} else if err != nil { // If db opens but no config exists.
-		gConfig.ApiKey = newKey
-		if err = SaveConfig(gConfig); err != nil {
-			return err
-		}
-	} else { // If db opens and a config exists.
-		config.ApiKey = newKey
-		if err = SaveConfig(*config); err != nil {
-			return err
-		}
 	}
 
 	fmt.Println("done")

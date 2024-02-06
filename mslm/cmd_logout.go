@@ -47,8 +47,7 @@ func cmdLogout() error {
 			return nil
 		}
 
-		config.ApiKey = ""
-		if err = SaveConfig(*config); err != nil {
+		if err = SaveConfig("ApiKey", ""); err != nil {
 			return err
 		}
 	}
