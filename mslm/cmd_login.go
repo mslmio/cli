@@ -87,7 +87,7 @@ func cmdLogin() error {
 			}
 		}
 
-		if err := SaveConfig("ApiKey", key); err != nil {
+		if err := SaveFieldInConfig("ApiKey", key); err != nil {
 			return err
 		}
 
@@ -106,7 +106,7 @@ func cmdLogin() error {
 		}
 	}
 
-	if err := SaveConfig("ApiKey", newKey); err != nil {
+	if err := SaveFieldInConfig("ApiKey", newKey); err != nil {
 		return err
 	}
 
