@@ -15,6 +15,7 @@ Commands:
   emailverify  verify an email address.
   signup       register a new Mslm user.
   login        enter API key associated with Mslm account.
+  logout       delete your current API key.
   completion   install or output shell auto-completion script.
   version      show current version.
 

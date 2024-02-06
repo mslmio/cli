@@ -10,6 +10,7 @@ var completions = &complete.Command{
 		"emailverify": completionsEmailVerify,
 		"signup":      completionsSignup,
 		"login":       completionsLogin,
+		"logout":      completionsLogout,
 		"completion":  completionsCompletion,
 		"version":     completionsVersion,
 	},
