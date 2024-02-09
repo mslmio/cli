@@ -47,7 +47,7 @@ func cmdLogout() error {
 			return nil
 		}
 
-		if err = SaveFieldInConfig("ApiKey", ""); err != nil {
+		if err = UpdateConfigFieldAndSave("ApiKey", ""); err != nil {
 			return err
 		}
 	}
