@@ -63,7 +63,7 @@ func cmdConfigSet() error {
 		} else {
 			switch key {
 			case "api_key":
-				if err := SaveFieldInConfig("ApiKey", confStr[1]); err != nil {
+				if err := UpdateConfigFieldAndSave("ApiKey", confStr[1]); err != nil {
 					return err
 				}
 			default:
