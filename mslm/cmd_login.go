@@ -26,11 +26,18 @@ func printHelpLogin() {
 	fmt.Printf(
 		`Usage: %s login [<opts>]
 
+Description:
+  Enter the API key associated with Mslm account to authenticate
+  in order to make API calls.
+
+  The key will be saved and automatically used when an API command
+  is ran.
+
 Examples:
-  # Login command with key flag.
+  # Login using an API key.
   $ %[1]s login --key <api-key>
 
-  # Authentication without key flag.
+  # Let the CLI prompt you for API key.
   $ %[1]s login
 
 Options:
@@ -82,8 +89,13 @@ func cmdLogin() error {
 	}
 	if key != "" {
 		if !fNoCheck {
-			if err := checkValidity(key); err != nil {
-				return fmt.Errorf("could not confirm if key is valid: %w", err)
+			isValid, err := checkValidity(key)
+			if err != nil {
+				return err
+			}
+
+			if !isValid {
+				return fmt.Errorf("invalid key")
 			}
 		}
 
@@ -101,8 +113,13 @@ func cmdLogin() error {
 	}
 
 	if !fNoCheck {
-		if err := checkValidity(newKey); err != nil {
-			return fmt.Errorf("could not confirm if key is valid: %w", err)
+		isValid, err := checkValidity(newKey)
+		if err != nil {
+			return err
+		}
+
+		if !isValid {
+			return fmt.Errorf("invalid key")
 		}
 	}
 
@@ -136,24 +153,12 @@ func enterKey(key string) (string, error) {
 	return key, nil
 }
 
-func checkValidity(key string) error {
+func checkValidity(key string) (bool, error) {
 	fmt.Println("checking key...")
-	keyOk, err := doesKeyExist(key)
-	if err != nil {
-		return fmt.Errorf("could not confirm if key is valid: %w", err)
-	}
-	if !keyOk {
-		return fmt.Errorf("invalid key")
-	}
-
-	return nil
-}
-
-func doesKeyExist(key string) (bool, error) {
 	// make API req for true key validity.
-	res, err := http.Get("https://mslm.io/api/v1/acct/apikey/zapier_check/0aa76ca0-bed2-4d07-815c-381c1b4c4084?apikey=" + key)
+	res, err := http.Get("http://localhost:1793/api/v1/acct/apikey/zapier_check/0aa76ca0-bed2-4d07-815c-381c1b4c4084?apikey=" + key)
 	if err != nil {
-		return false, err
+		return false, fmt.Errorf("could not confirm if key is valid: %w", err)
 	}
 	defer res.Body.Close()
 
