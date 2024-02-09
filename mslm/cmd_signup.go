@@ -134,7 +134,7 @@ func cmdSignup() error {
 				return err
 			}
 
-			if err = SaveFieldInConfig("ApiKey", body.Data.ApiKey); err != nil {
+			if err = UpdateConfigFieldAndSave("ApiKey", body.Data.ApiKey); err != nil {
 				return err
 			}
 

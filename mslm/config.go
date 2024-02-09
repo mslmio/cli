@@ -52,7 +52,7 @@ func UpdateConfigField(config *Config, fieldName string, newValue any) *Config {
 	return config
 }
 
-func SaveFieldInConfig(configName string, configValue any) error {
+func UpdateConfigFieldAndSave(configName string, configValue any) error {
 	// Check if a config already exists.
 	conf, err := GetConfig()
 	if err != nil && conf == nil { // If db fails to open.
