@@ -87,33 +87,17 @@ func cmdLogin() error {
 	if len(args) > 0 {
 		key = args[0]
 	}
-	if key != "" {
-		if !fNoCheck {
-			isValid, err := checkValidity(key)
-			if err != nil {
-				return err
-			}
-
-			if !isValid {
-				return fmt.Errorf("invalid key")
-			}
+	if key == "" {
+		newKey, err := enterKey(key)
+		if err != nil {
+			return fmt.Errorf(err.Error())
 		}
 
-		if err := UpdateConfigFieldAndSave("ApiKey", key); err != nil {
-			return err
-		}
-
-		fmt.Println("done")
-		return nil
-	}
-
-	newKey, err := enterKey(key)
-	if err != nil {
-		return fmt.Errorf(err.Error())
+		key = newKey
 	}
 
 	if !fNoCheck {
-		isValid, err := checkValidity(newKey)
+		isValid, err := checkValidity(key)
 		if err != nil {
 			return err
 		}
@@ -123,7 +107,7 @@ func cmdLogin() error {
 		}
 	}
 
-	if err := UpdateConfigFieldAndSave("ApiKey", newKey); err != nil {
+	if err := UpdateConfigFieldAndSave("ApiKey", key); err != nil {
 		return err
 	}
 
