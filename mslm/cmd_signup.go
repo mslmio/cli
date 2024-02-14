@@ -98,16 +98,16 @@ func cmdSignup() error {
 	fmt.Println("")
 	fmt.Println("Press [Enter] when done if not automatically detected.")
 
-	// Retrieving signup token from signup URL.
+	// Retrieving auto token from signup URL.
 	parsedURL, err := url.Parse(body.Data.SignupUrl)
 	if err != nil {
 		fmt.Println("Error parsing URL:", err)
 		return err
 	}
 
-	cliToken := parsedURL.Query().Get("signup_token")
+	cliToken := parsedURL.Query().Get("auto_token")
 	if cliToken == "" {
-		fmt.Println("Signup token not found in URL")
+		fmt.Println("Auto token not found in URL")
 		return err
 	}
 
@@ -116,20 +116,13 @@ func cmdSignup() error {
 	count := 0
 	for {
 		count++
-		res, err := http.Get("https://mslm.io/_/api/u/v1/signup/auto/check?signup_token=" + cliToken)
+		res, err := http.Get("https://mslm.io/_/api/u/v1/signup/auto/check?auto_token=" + cliToken)
 		if err != nil {
 			return err
 		}
 
 		if res.StatusCode == http.StatusOK {
-			rawBody, err := io.ReadAll(res.Body)
-			if err != nil {
-				return err
-			}
-			res.Body.Close()
-
-			body := &responseApiKey{}
-			err = json.Unmarshal(rawBody, body)
+			body, err := readBody(res)
 			if err != nil {
 				return err
 			}
@@ -153,4 +146,20 @@ func cmdSignup() error {
 	}
 
 	return nil
+}
+
+func readBody(res *http.Response) (*responseApiKey, error) {
+	rawBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	body := &responseApiKey{}
+	err = json.Unmarshal(rawBody, body)
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
 }
