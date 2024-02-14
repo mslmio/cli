@@ -27,6 +27,8 @@ func main() {
 	switch {
 	case cmd == "emailverify":
 		err = cmdEmailVerify()
+	case cmd == "signup":
+		err = cmdSignup()
 	case cmd == "completion":
 		err = cmdCompletion()
 	case cmd == "version" || cmd == "vsn" || cmd == "v":
