@@ -27,11 +27,7 @@ func printHelpLogin() {
 		`Usage: %s login [<opts>]
 
 Description:
-  Enter the API key associated with Mslm account to authenticate
-  in order to make API calls.
-
-  The key will be saved and automatically used when an API command
-  is ran.
+  Authenticate with an Mslm account using an API key.
 
 Examples:
   # Login using an API key.
