@@ -19,6 +19,9 @@ func printHelpLogout() {
 	fmt.Printf(
 		`Usage: %s logout [<opts>]
 
+Description:
+  Logout from an Mslm account.
+
 Options:
   --help, -h
     show help.
@@ -39,14 +42,11 @@ func cmdLogout() error {
 	if err != nil && config == nil { // If db fails to open.
 		return err
 	} else if err != nil { // If db opens but no config exists.
+		return err
+	} else if config.ApiKey == "" { // If db opens and a config exists, but has no API key.
 		fmt.Println("not logged in")
 		return nil
-	} else { // If db opens and a config exists.
-		if config.ApiKey == "" {
-			fmt.Println("not logged in")
-			return nil
-		}
-
+	} else {
 		if err = UpdateConfigFieldAndSave("ApiKey", ""); err != nil {
 			return err
 		}
