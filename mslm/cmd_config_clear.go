@@ -75,24 +75,23 @@ func cmdConfigClear() error {
 			return err
 		} else if err != nil { // If no config exists.
 			return err
-		} else {
-			switch key {
-			case "api_key":
-				if conf.ApiKey == "" {
-					fmt.Println("API key already doesn't exist.")
-					continue
-				}
-				conf.ApiKey = ""
-			default:
-				return fmt.Errorf("err: invalid key argument %s", key)
-			}
-
-			if err := SaveConfig(*conf); err != nil {
-				return err
-			}
-
-			fmt.Println("Cleared.")
 		}
+
+		switch key {
+		case "api_key":
+			if conf.ApiKey == "" {
+				continue
+			}
+			conf.ApiKey = ""
+		default:
+			return fmt.Errorf("err: invalid key argument %s", key)
+		}
+
+		if err := SaveConfig(*conf); err != nil {
+			return err
+		}
+
+		fmt.Println("Cleared.")
 	}
 
 	return nil

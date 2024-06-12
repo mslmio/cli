@@ -43,6 +43,8 @@ func cmdConfigGet() error {
 		return nil
 	}
 
+	validKeys := []string{"api_key"}
+
 	processedKeys := make(map[string]bool)
 
 	for _, arg := range args {
@@ -52,7 +54,16 @@ func cmdConfigGet() error {
 			continue
 		}
 
-		if key != "api_key" {
+		// Check if the key is a valid key
+		valid := false
+		for _, validKey := range validKeys {
+			if key == validKey {
+				valid = true
+				break
+			}
+		}
+
+		if !valid {
 			return fmt.Errorf("err: invalid key argument %s", key)
 		}
 		processedKeys[key] = true
@@ -66,10 +77,9 @@ func cmdConfigGet() error {
 			switch key {
 			case "api_key":
 				if conf.ApiKey == "" {
-					fmt.Println("No API key exists.")
 					continue
 				}
-				fmt.Println("API Key:", conf.ApiKey)
+				fmt.Println(conf.ApiKey)
 			}
 		}
 

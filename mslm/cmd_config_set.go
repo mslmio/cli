@@ -21,7 +21,7 @@ func printHelpConfigSet() {
 		`Usage: %s config set [<key>=<value>...]
 
 Description:
-  Change the configurations.
+  Change a configuration.
 
 Examples:
   $ %[1]s config set api_key=<your-key>
@@ -33,7 +33,6 @@ Options:
 Configurations:
   api_key=<your-key>
     Save the API key for use when querying the API.
-    (API key will not be validated).
 `, progBase)
 }
 
@@ -53,7 +52,9 @@ func cmdConfigSet() error {
 		key := strings.ToLower(confStr[0])
 		if len(confStr) != 2 {
 			if key == "api_key" {
-				return fmt.Errorf("err: no value provided for key %s", key)
+				if err := UpdateConfigFieldAndSave("ApiKey", ""); err != nil {
+					return err
+				}
 			}
 			return fmt.Errorf("err: invalid key argument %s", key)
 		}

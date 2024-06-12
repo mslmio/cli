@@ -26,6 +26,9 @@ func printHelpConfig() {
 	fmt.Printf(
 		`Usage: %s config <cmd> [<opts>]
 
+Description:
+  Allows managing the configuration settings for the CLI.
+
 Commands:
   list      prints all the configs available.
   get       get the value of a specified config.
@@ -71,9 +74,5 @@ func cmdConfig() error {
 		err = configHelp()
 	}
 
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "err: %v\n", err)
-	}
-
-	return nil
+	return err
 }

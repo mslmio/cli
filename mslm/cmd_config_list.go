@@ -19,6 +19,9 @@ func printHelpConfigList() {
 	fmt.Printf(
 		`Usage: %s config list [<opts>]
 
+Description:
+  List all available configurations.
+
 Options:
   --help, -h
     show help.
