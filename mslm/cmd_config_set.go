@@ -52,7 +52,7 @@ func cmdConfigSet() error {
 		key := strings.ToLower(confStr[0])
 		if len(confStr) != 2 {
 			if key == "api_key" {
-				if err := UpdateConfigFieldAndSave("ApiKey", ""); err != nil {
+				if err := UpdateConfigFieldAndSave(API_KEY_FIELD, ""); err != nil {
 					return err
 				}
 			}
@@ -64,7 +64,7 @@ func cmdConfigSet() error {
 		} else {
 			switch key {
 			case "api_key":
-				if err := UpdateConfigFieldAndSave("ApiKey", confStr[1]); err != nil {
+				if err := UpdateConfigFieldAndSave(API_KEY_FIELD, confStr[1]); err != nil {
 					return err
 				}
 			default:

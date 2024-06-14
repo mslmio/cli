@@ -79,7 +79,7 @@ func cmdConfigGet() error {
 				if conf.ApiKey == "" {
 					continue
 				}
-				fmt.Println(conf.ApiKey)
+				fmt.Printf("api_key=%v\n", conf.ApiKey)
 			}
 		}
 

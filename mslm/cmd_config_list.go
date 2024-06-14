@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/mslmio/cli/lib/complete"
 	"github.com/mslmio/cli/lib/complete/predict"
@@ -25,10 +26,6 @@ Description:
 Options:
   --help, -h
     show help.
-
-Configurations:
-  api_key
-    The API key used when querying the API.
 `, progBase)
 }
 
@@ -41,7 +38,20 @@ func cmdConfigList() error {
 		return nil
 	}
 
-	printHelpConfigList()
+	config, err := GetConfig()
+	if err != nil {
+		return fmt.Errorf("failed to get config: %v", err)
+	}
+
+	v := reflect.ValueOf(*config)
+	t := v.Type()
+
+	fmt.Println("Available configurations:")
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		jsonTag := field.Tag.Get("json")
+		fmt.Printf("  %s\n", jsonTag)
+	}
 
 	return nil
 }

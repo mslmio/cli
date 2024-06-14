@@ -11,10 +11,10 @@ import (
 
 var completionsConfigClear = &complete.Command{
 	Flags: map[string]complete.Predictor{
-		"-h":      predict.Nothing,
-		"--help":  predict.Nothing,
-		"-r":      predict.Nothing,
-		"--reset": predict.Nothing,
+		"-h":     predict.Nothing,
+		"--help": predict.Nothing,
+		"-a":     predict.Nothing,
+		"--all":  predict.Nothing,
 	},
 }
 
@@ -30,31 +30,31 @@ Examples:
   $ %[1]s config clear api_key
 
   # Reset all configs
-  $ %[1]s config clear --reset
+  $ %[1]s config clear --all
 
 Options:
   --help, -h
     show help.
-  --reset, -r
+  --all, -a
     reset all configs.
 `, progBase)
 }
 
 func cmdConfigClear() error {
-	var fReset bool
+	var fAll bool
 
 	pflag.BoolVarP(&fHelp, "help", "h", false, "show help.")
-	pflag.BoolVarP(&fReset, "reset", "r", false, "reset all configs.")
+	pflag.BoolVarP(&fAll, "all", "a", false, "reset all configs.")
 	pflag.Parse()
 
 	args := pflag.Args()[2:]
 
-	if fHelp || (len(args) < 1 && !fReset) {
+	if fHelp || (len(args) < 1 && !fAll) {
 		printHelpConfigClear()
 		return nil
 	}
 
-	if fReset {
+	if fAll {
 		if err := ClearConfig(); err != nil {
 			return err
 		}
@@ -64,35 +64,32 @@ func cmdConfigClear() error {
 		return nil
 	}
 
+	conf, err := GetConfig()
+	if err != nil && conf == nil { // If db fails to open.
+		return err
+	} else if err != nil { // If no config exists.
+		return err
+	}
+
 	for _, arg := range args {
 		key := strings.ToLower(arg)
 		if key != "api_key" {
 			return fmt.Errorf("err: invalid key argument %s", key)
 		}
 
-		conf, err := GetConfig()
-		if err != nil && conf == nil { // If db fails to open.
-			return err
-		} else if err != nil { // If no config exists.
-			return err
-		}
-
 		switch key {
 		case "api_key":
-			if conf.ApiKey == "" {
-				continue
-			}
 			conf.ApiKey = ""
 		default:
 			return fmt.Errorf("err: invalid key argument %s", key)
 		}
-
-		if err := SaveConfig(*conf); err != nil {
-			return err
-		}
-
-		fmt.Println("Cleared.")
 	}
+
+	if err := SaveConfig(*conf); err != nil {
+		return err
+	}
+
+	fmt.Println("Cleared.")
 
 	return nil
 }
