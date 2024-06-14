@@ -12,10 +12,12 @@ import (
 const (
 	CONFIG_BUCKET = "config"
 	CONFIG_KEY    = "configKey"
+
+	API_KEY_FIELD = "ApiKey"
 )
 
 type Config struct {
-	ApiKey string `json:"apiKey"`
+	ApiKey string `json:"api_key"`
 }
 
 // Gets the global config directory, creating it if necessary.
@@ -45,7 +47,7 @@ func DbFilePath() (string, error) {
 
 func UpdateConfigField(config *Config, fieldName string, newValue any) *Config {
 	switch fieldName {
-	case "ApiKey":
+	case API_KEY_FIELD:
 		config.ApiKey = newValue.(string)
 	}
 
@@ -135,4 +137,21 @@ func GetConfig() (*Config, error) {
 	}
 
 	return &config, nil
+}
+
+func ClearConfig() error {
+	conf, err := GetConfig()
+	if err != nil && conf == nil {
+		return err
+	} else if err != nil {
+		return fmt.Errorf("config already does not exist")
+	} else {
+		conf = &Config{}
+	}
+
+	if err := SaveConfig(*conf); err != nil {
+		return err
+	}
+
+	return nil
 }
