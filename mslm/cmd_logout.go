@@ -47,7 +47,7 @@ func cmdLogout() error {
 		fmt.Println("not logged in")
 		return nil
 	} else {
-		if err = UpdateConfigFieldAndSave("ApiKey", ""); err != nil {
+		if err = UpdateConfigFieldAndSave(API_KEY_FIELD, ""); err != nil {
 			return err
 		}
 	}
