@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"net/http"
 	"os"
 
 	"github.com/mslmio/cli/lib/complete"
@@ -14,11 +13,10 @@ import (
 
 var completionsLogin = &complete.Command{
 	Flags: map[string]complete.Predictor{
-		"-k":         predict.Nothing,
-		"--key":      predict.Nothing,
-		"--no-check": predict.Nothing,
-		"-h":         predict.Nothing,
-		"--help":     predict.Nothing,
+		"-k":     predict.Nothing,
+		"--key":  predict.Nothing,
+		"-h":     predict.Nothing,
+		"--help": predict.Nothing,
 	},
 }
 
@@ -27,11 +25,7 @@ func printHelpLogin() {
 		`Usage: %s login [<opts>]
 
 Description:
-  Enter the API key associated with Mslm account to authenticate
-  in order to make API calls.
-
-  The key will be saved and automatically used when an API command
-  is ran.
+  Authenticate with an Mslm account using an API key.
 
 Examples:
   # Login using an API key.
@@ -44,9 +38,6 @@ Options:
   --key <api-key>, -k <api-key>
     API key to login with.
     (this is potentially unsafe; let the CLI prompt you instead).
-  --no-check
-    disable checking if the key is valid or not.
-    default: false.
   --help, -h
     show help.
 `, progBase)
@@ -54,11 +45,9 @@ Options:
 
 func cmdLogin() error {
 	var fKey string
-	var fNoCheck bool
 	var fHelp bool
 
 	pflag.StringVarP(&fKey, "key", "k", "", "the API key to save.")
-	pflag.BoolVar(&fNoCheck, "no-check", false, "disable checking if API key is valid.")
 	pflag.BoolVarP(&fHelp, "help", "h", false, "show help.")
 	pflag.Parse()
 
@@ -96,17 +85,6 @@ func cmdLogin() error {
 		key = newKey
 	}
 
-	if !fNoCheck {
-		isValid, err := checkValidity(key)
-		if err != nil {
-			return err
-		}
-
-		if !isValid {
-			return fmt.Errorf("invalid key")
-		}
-	}
-
 	if err := UpdateConfigFieldAndSave("ApiKey", key); err != nil {
 		return err
 	}
@@ -135,20 +113,4 @@ func enterKey(key string) (string, error) {
 	}
 
 	return key, nil
-}
-
-func checkValidity(key string) (bool, error) {
-	fmt.Println("checking key...")
-	// make API req for true key validity.
-	res, err := http.Get("http://localhost:1793/api/v1/acct/apikey/zapier_check/0aa76ca0-bed2-4d07-815c-381c1b4c4084?apikey=" + key)
-	if err != nil {
-		return false, fmt.Errorf("could not confirm if key is valid: %w", err)
-	}
-	defer res.Body.Close()
-
-	if res.StatusCode == http.StatusOK {
-		return true, nil
-	}
-
-	return false, nil
 }

@@ -116,7 +116,6 @@ func TestFiles(t *testing.T) {
 	for _, tt := range tests {
 		for _, prefix := range tt.prefixes {
 			t.Run(tt.name+"/prefix="+prefix, func(t *testing.T) {
-
 				matches := tt.p.Predict(prefix)
 
 				sort.Strings(matches)
