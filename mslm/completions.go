@@ -9,6 +9,9 @@ var completions = &complete.Command{
 	Sub: map[string]*complete.Command{
 		"emailverify": completionsEmailVerify,
 		"signup":      completionsSignup,
+		"login":       completionsLogin,
+		"logout":      completionsLogout,
+		"config":      completionsConfig,
 		"completion":  completionsCompletion,
 		"version":     completionsVersion,
 	},

@@ -14,6 +14,9 @@ func printHelpDefault() {
 Commands:
   emailverify  verify an email address.
   signup       register a new Mslm user.
+  login        authenticate an existing Mslm user.
+  logout       logout from the existing Mslm user.
+  config       manage the config.
   completion   install or output shell auto-completion script.
   version      show current version.
 
