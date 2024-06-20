@@ -31,6 +31,10 @@ func main() {
 		err = cmdSignup()
 	case cmd == "login":
 		err = cmdLogin()
+	case cmd == "logout":
+		err = cmdLogout()
+	case cmd == "config":
+		err = cmdConfig()
 	case cmd == "completion":
 		err = cmdCompletion()
 	case cmd == "version" || cmd == "vsn" || cmd == "v":

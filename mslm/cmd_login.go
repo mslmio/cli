@@ -85,7 +85,7 @@ func cmdLogin() error {
 		key = newKey
 	}
 
-	if err := UpdateConfigFieldAndSave("ApiKey", key); err != nil {
+	if err := UpdateConfigFieldAndSave(API_KEY_FIELD, key); err != nil {
 		return err
 	}
 
